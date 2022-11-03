@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="", method="post">
+        {% csrf_token %}
+        <label for="">Username</label>
+        <input type="text", id="username", name="username", placeholder="Create a Username" Required>
+
+        <br><br>
+        
+        <label for="">First Name</label>
+        <input type="text", id="fname", name="lname", placeholder="Enter First Name" Required>
+
+        <br><br>
+        
+        <label for="">Last Name (Optional)</label>
+        <input type="text", id="lname", name="fname", placeholder="Enter Last Name">
+
+        <br><br>
+        
+        <label for="">Password</label>
+        <input type="password", id="pass1", name="pass1", placeholder="Create a Password" Required>
+
+        <br><br>
+        
+        <label for="">Confirm Password</label>
+        <input type="password", id="pass2", name="pass2", placeholder="Re-enter the Password" Required>
+
+        <br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</body>
+</html>
