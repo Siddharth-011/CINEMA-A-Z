@@ -5,7 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 def home(request):
-    return render(request, "index.html")
+    if request.user.is_authenticated:
+        return render(request, 'index-2.html')
+    else:
+        return render(request, "index-1.html")
 
 def signin(request):
 
@@ -16,7 +19,7 @@ def signin(request):
         user=authenticate(username=username, password=password)
         if user is not None:
             login(request,user)
-            return render(request, "index.html", {'name': user.first_name})
+            return redirect('home')
         else:
             messages.error(request, "Wrong Username or Password")
             return redirect('signin')
@@ -27,19 +30,30 @@ def signup(request):
 
     if request.method=="POST":
         username=request.POST["username"]
-        fname=request.POST["fname"]
-        lname=request.POST["lname"]
+        name=request.POST["name"]
+        email=request.POST["email"]
         pass1=request.POST["pass1"]
         pass2=request.POST["pass2"]
 
-        curruser=User.objects.create_user(username=username, password=pass1)
-        curruser.first_name=fname
-        curruser.last_name=lname
+        if pass1==pass2:
+            if User.objects.filter(username=username).exists():
+                messages.info(request, 'Username already taken')
 
-        curruser.save()
-        messages.success(request, "Your account has been succesfully created")
+            else:
+                if User.objects.filter(email=email):
+                    messages.info(request, 'Email already in use')
 
-        return redirect('signin/')
+                else:
+                    curruser=User.objects.create_user(username=username, password=pass1, email=email)
+                    curruser.first_name=name
+
+                    curruser.save()
+                    messages.success(request, "Your account has been succesfully created")
+
+                    return redirect('signin')
+
+        else:
+            messages.error(request, 'Passwords entered not matching')
 
     return render(request, "signup.html")
     
