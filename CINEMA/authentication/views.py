@@ -5,10 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 def home(request):
-    if request.user.is_authenticated:
-        return render(request, 'index-2.html')
-    else:
-        return render(request, "index-1.html")
+    return render(request, "index.html")
 
 def signin(request):
 
@@ -19,7 +16,7 @@ def signin(request):
         user=authenticate(username=username, password=password)
         if user is not None:
             login(request,user)
-            return redirect('home')
+            return render(request, "index.html", {'name': user.first_name})
         else:
             messages.error(request, "Wrong Username or Password")
             return redirect('signin')
@@ -30,30 +27,19 @@ def signup(request):
 
     if request.method=="POST":
         username=request.POST["username"]
-        name=request.POST["name"]
-        email=request.POST["email"]
+        fname=request.POST["fname"]
+        lname=request.POST["lname"]
         pass1=request.POST["pass1"]
         pass2=request.POST["pass2"]
 
-        if pass1==pass2:
-            if User.objects.filter(username=username).exists():
-                messages.info(request, 'Username already taken')
+        curruser=User.objects.create_user(username=username, password=pass1)
+        curruser.first_name=fname
+        curruser.last_name=lname
 
-            else:
-                if User.objects.filter(email=email):
-                    messages.info(request, 'Email already in use')
+        curruser.save()
+        messages.success(request, "Your account has been succesfully created")
 
-                else:
-                    curruser=User.objects.create_user(username=username, password=pass1, email=email)
-                    curruser.first_name=name
-
-                    curruser.save()
-                    messages.success(request, "Your account has been succesfully created")
-
-                    return redirect('signin')
-
-        else:
-            messages.error(request, 'Passwords entered not matching')
+        return redirect('signin/')
 
     return render(request, "signup.html")
     
