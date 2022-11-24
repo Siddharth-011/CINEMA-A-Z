@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
-def home(request):
+def welcome(request):
     if request.user.is_authenticated:
-        return render(request, 'index-2.html')
+        return redirect('home')
     else:
         return render(request, "index-1.html")
 
@@ -60,4 +60,4 @@ def signup(request):
 def signout(request):
     logout(request)
     messages.success(request, "Successfully Logged Out")
-    return redirect('home')
+    return redirect('welcome')
