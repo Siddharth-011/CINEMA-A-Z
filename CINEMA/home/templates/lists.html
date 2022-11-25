@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>List - "{{type}}"</title>
     <link rel="stylesheet" href="{% static 'home.css' %}">
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
 
@@ -41,5 +41,20 @@
         <hr>
     </div>
 
+    <h2 style="margin-top: 110px;">"{{type}}" List of {{user}}</h2>
+    <div style="margin-bottom: 50px;">
+        <ol>
+            {% if results|length == 0 %}
+            <h3 style="text-align: center;">No items in your list.</h3>
+            {% else %}
+            {% for result in results %}
+            <li><a href="/home/titles/{{result.movie}}">{{result.name}}</a> ({{result.year}})
+                <button class="btn smallbtn" onclick="window.location.href='/home/remove/{{type2}}{{result.movie}}'">Remove</button>
+            </li>
+            {% endfor %}
+            {% endif %}
+        </ol>
+    </div>
+    
 </body>
 </html>

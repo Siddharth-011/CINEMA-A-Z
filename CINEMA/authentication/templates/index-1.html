@@ -1,10 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Leckerli+One">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
     <style>
         *{
             font-family: Tahoma, sans-serif;
@@ -35,7 +38,9 @@
     </div>
     {% endfor %} 
 
-    <h3>Welcome To ...</h3>
+    <h3>Welcome To:</h3>
+    <h1 style="font-family:'Leckerli One';color: rgb(120, 80, 175);font-size: 400%;margin: auto;text-align: center;">Cinema A-Z</h1>
+    <h4 style="text-align: center; color: rgb(120, 80, 175);">(To continue, you need an account)</h4>
 
     <button onclick="window.location.href='signin/'"> SignIn </button>
     <button onclick="window.location.href='signup/'"> SignUp </button>

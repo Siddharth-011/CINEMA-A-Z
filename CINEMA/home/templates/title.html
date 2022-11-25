@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+
+</head>
+<body style="background-color: rgb(245, 238, 247);">
+
+    <div class="menu">
+        <div style="margin:8px;margin-bottom: 0px;">
+            <div class="header header-grid">
+                <div class="left">
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="window.location.href='/'"> Menu </button>
+                        <div class="dropdown-content">
+                            <a href="/home">Home</a>
+                            <a href="/home/lists/tw">To Watch</a>
+                            <a href="/home/lists/wa">Watched</a>
+                            <a href="/home/lists/li">Liked</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="middle">
+                    <form action="/home/search" method="get" style="text-align: center;">
+                        <input type="search" name="query" id="query" class="search" placeholder="Search...">
+                    </form>
+                </div>
+
+                <div class="right">
+                    <button class="btn" style="float: right;" onclick="window.location.href='/signout'"> SignOut </button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <div class="boxes" style="margin-top: 110px;">
+        <h1 style="margin-bottom: 5px;">{{title}}</h1>
+        <h5 style="margin: 0px;">{% if type == 1 %}Movie{% else %}TV{% endif %},{{year}}</h5>
+        <hr>
+        <div>
+            <img src="{{img}}" alt="{{title}} image" style="width:186px; height:275px; padding: 10px;">
+            <br>
+            <button class="btnsmall" onclick="window.location.href='/home/add/{{tw}}tw{{id}}'">{% if tw == 1 %}Remove from{% else %}Add to{% endif %} "To Watch"</button>
+            <button class="btnsmall" onclick="window.location.href='/home/add/{{w}}wa{{id}}'">{% if w == 1 %}Remove from{% else %}Add to{% endif %} "Watched"</button>
+            <button class="btnsmall" onclick="window.location.href='/home/add/{{l}}li{{id}}'">{% if l == 1 %}Liked{% else %}Like{% endif %}</button>
+        </div>
+        <div>
+            <hr>
+            <h2>Ratings</h2>
+            <hr>
+            <h4>IMDb - {{rimdb}}</h4>
+            <h4>Rotten Tomatoes - {{r1rt}} (Critics), {{r2rt}} (Audience)</h4>
+            <h4>Metacritic - {{r1mc}} (Critics), {{r2mc}}(Audience)</h4>
+        </div>
+    </div>
+
+    <div class="boxes">
+        <h2>Plot</h2>
+        <hr>
+        <p>{{plot}}</p>
+    </div>
+    <div class="boxes">
+        <h2>Similar Titles</h2>
+        <hr>
+        <a href="/home/titles/{{sim1}}"><img src="{{sim1h}}" style="margin: 5px;width: 149px; height: 221px; margin-top: 10px;"></a>
+        <a href="/home/titles/{{sim2}}"><img src="{{sim2h}}" style="margin: 5px;width: 149px; height: 221px; margin-top: 10px;"></a>
+        <a href="/home/titles/{{sim3}}"><img src="{{sim3h}}" style="margin: 5px;width: 149px; height: 221px; margin-top: 10px;"></a>
+        <a href="/home/titles/{{sim4}}"><img src="{{sim4h}}" style="margin: 5px;width: 149px; height: 221px; margin-top: 10px;"></a>
+    </div>
+    <div class="boxes">
+        <h2>Data</h2>
+        <hr>
+        <h4>Language - {{lang}}</h4>
+        <h4>Year - {{year}}</h4>
+        <h4>Duration - {{runtime}}</h4>
+        <h4>Genre - {{genre}}</h4>
+        <h4>Cast - {{cast}}</h4>
+    </div>
+    <div class="boxes">
+        <h2>Platform</h2>
+        <hr>
+        {% if v != None %}
+        <a href="{{v}}">Vudu</a><br>
+        {% endif %}
+        {% if p != None %}
+        <a href="{{p}}">Peacock</a><br>
+        {% endif %}
+        {% if amc != None %}
+        <a href="{{amc}}">AMC+</a><br>
+        {% endif %}
+        {% if nf != None %}
+        <a href="{{nf}}">Netflix </a><br>
+        {% endif %}
+        {% if h != None %}
+        <a href="{hf}}"> Hulu </a><br>
+        {% endif %} 
+        {% if ap != None %}
+        <a href="{{ap}}"> Amazon Prime </a><br>
+        {% endif %} 
+        {% if dp != None %}
+        <a href="{{dp}}"> Disney+ </a><br>
+        {% endif %}
+        {% if hm != None %}
+        <a href="{{hm}}"> HBO-Max </a><br>
+        {% endif %}
+        {% if pp != None %}
+        <a href="{{pp}}"> Paramount+ </a><br>
+        {% endif %}
+        {% if atp != None %}
+        <a href="{{atp}}"> Apple TV+ </a><br>
+        {% endif %}
+        {% if s != None %}
+        <a href="{{s}}"> Showtime </a><br>
+        {% endif %}
+        {% if a != None %}
+        <a href="{{a}}"> Apple TV </a><br>
+        {% endif %}
+    </div>
+    <hr>
+    <h1 style="text-align: center;">Reviews</h1>
+    <hr>
+    <div class="boxes">
+        <h2>IMDb</h2>
+        <hr>
+        <h3>({{imdb1r}}) {{imdb1h}}</h3>
+        <h4>{{imdb1}}</h4>
+        <hr style="margin: 10px;">
+        <h3>({{imdb2r}}) {{imdb2h}}</h3>
+        <h4>{{imdb2}}</h4>
+    </div>
+    <div class="boxes">
+        <h2>Metacritic (User)</h2>
+        <hr>
+        <h3>{{mc1r}}</h3>
+        <h4>{{mc1}}</h4>
+        <hr style="margin: 10px;">
+        <h3>{{mc2r}}</h3>
+        <h4>{{mc2}}</h4>
+    </div>
+
+    {% if type == 1 %}
+    <div class="boxes">
+        <h2>Rotten Tomatoes (Critic)</h2>
+        <hr>
+        <h3>Verdict - Fresh</h3>
+        <h4>{{rt1}}</h4>
+        <hr style="margin: 10px;">
+        <h3>Verdict - Rotten</h3>
+        <h4>{{rt2}}</h4>
+    </div>
+    {% else %}
+    <div class="boxes">
+        <h2>Rotten Tomatoes Season Ratings</h2>
+        {% for s in seasoninfo %}
+        <h3>s</h3>
+        {% endfor %}
+        <h3></h3>
+    </div>
+    {% endif %}
+    
+</body>
+</html>
